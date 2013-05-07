@@ -9,7 +9,7 @@ public class ImageServerMain
 {
 	public ImageServerMain()
 	{
-		
+		//
 	}
 	public static void main( String[] args )
 	{
