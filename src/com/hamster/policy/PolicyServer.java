@@ -1,5 +1,7 @@
 package com.hamster.policy;
 
+import com.hamster.ImageServerMain;
+
 import java.io.*;
 import java.net.*;
 
@@ -27,6 +29,8 @@ public class PolicyServer implements Runnable
 	public PolicyServer( int port)
 	{
 		this.port = port;
+		listening = false;
+		
 	}
 
 	@Override
@@ -35,11 +39,25 @@ public class PolicyServer implements Runnable
 		try
 		{
 			serverSocket = new ServerSocket(port);
+			listening = true;
+			ImageServerMain.consoleMessage("Policy Server Listening");
+			
+			while
+			{
+				Socket socket = serverSocket.accept();
+				
+			}
+					
 			
 			
 		} catch (IOException e)
 		{
 			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
 		}
+	}
+	
+	public void consoleMessage(String msg)
+	{
+		
 	}
 }
