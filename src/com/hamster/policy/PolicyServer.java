@@ -42,14 +42,14 @@ public class PolicyServer implements Runnable
 			listening = true;
 			ImageServerMain.consoleMessage("Policy Server Listening");
 			
-			while
+			while (listening)
 			{
 				Socket socket = serverSocket.accept();
-				
+				consoleMessage("client connection from " + socket.getRemoteSocketAddress());
+				PolicyServerConnection connection = new PolicyServerConnection(socket);
+				new Thread(connection).start();
 			}
 					
-			
-			
 		} catch (IOException e)
 		{
 			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
@@ -58,6 +58,6 @@ public class PolicyServer implements Runnable
 	
 	public void consoleMessage(String msg)
 	{
-		
+		ImageServerMain.consoleMessage(msg);
 	}
 }
