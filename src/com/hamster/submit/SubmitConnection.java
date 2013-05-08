@@ -1,5 +1,8 @@
 package com.hamster.submit;
 
+import java.io.BufferedInputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.net.*;
 
 /**
@@ -22,6 +25,12 @@ public class SubmitConnection implements Runnable
 	@Override
 	public void run()
 	{
-		//To change body of implemented methods use File | Settings | File Templates.
+		DataInputStream inputStream = new DataInputStream(new BufferedInputStream(socket.getInputStream()));
+		DataOutputStream outputStream = new DataOutputStream( socket.getOutputStream( ));
+	}
+	
+	public void recievePacket()
+	{
+		
 	}
 }

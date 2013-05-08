@@ -1,8 +1,10 @@
 package com.hamster.mainserver;
 
+import com.hamster.submit.SubmitConnection;
+
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,9 +15,12 @@ import java.util.*;
  */
 public class ImageServer implements Runnable
 {
-	private ServerSocket serverSocket;
+	private ServerSocket submitSocket;
+	private ServerSocket displaySocket;
 	private int port;
 	private boolean listening;
+	
+	private ArrayList<SubmitConnection> submitList;
 
 	
 	public ImageServer(int port)
@@ -23,7 +28,7 @@ public class ImageServer implements Runnable
 		this.port = port;
 		listening = false;
 		
-		
+		submitList = new ArrayList<SubmitConnection>();
 	}
 
 	@Override
@@ -31,14 +36,15 @@ public class ImageServer implements Runnable
 	{
 		try
 		{
-			serverSocket = new ServerSocket(port);
+			submitSocket = new ServerSocket(port);
 			listening = true;
 			//insert console message here
 			
 			while (listening)
 			{
-				Socket socket = serverSocket.accept();
+				Socket socket = submitSocket.accept();
 				//console message
+				submitList.add(new SubmitConnection(socket));
 				
 			}
 			
