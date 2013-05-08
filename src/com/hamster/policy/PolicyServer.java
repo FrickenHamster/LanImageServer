@@ -1,5 +1,6 @@
 package com.hamster.policy;
 
+import java.io.*;
 import java.net.*;
 
 /**
@@ -23,14 +24,22 @@ public class PolicyServer implements Runnable
 	private ServerSocket serverSocket;
 	private boolean listening;
 	
-	public PolicyServer()
+	public PolicyServer( int port)
 	{
-		
+		this.port = port;
 	}
 
 	@Override
 	public void run()
 	{
-		//To change body of implemented methods use File | Settings | File Templates.
+		try
+		{
+			serverSocket = new ServerSocket(port);
+			
+			
+		} catch (IOException e)
+		{
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
 	}
 }
