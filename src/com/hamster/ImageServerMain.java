@@ -1,5 +1,6 @@
 package com.hamster;
 
+import com.hamster.mainserver.*;
 import com.hamster.policy.*;
 
 /**
@@ -12,13 +13,18 @@ import com.hamster.policy.*;
 public class ImageServerMain 
 {
 	
+	public static int POLICY_PORT = 12242;
+	public static int UPLOAD_PORT = 12243;
+	public static int DISPLAY_PORT = 12244;
+	
 	public ImageServerMain()
 	{
 		
 	}
 	public static void main( String[] args )
 	{
-		new Thread(new PolicyServer(22423)).start();
+		new Thread(new PolicyServer(POLICY_PORT)).start();
+		new Thread(new ImageServer(UPLOAD_PORT, DISPLAY_PORT)).start();
 	}
 	
 	public static void consoleMessage(String msg)

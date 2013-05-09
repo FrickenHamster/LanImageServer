@@ -45,7 +45,7 @@ public class PolicyServer implements Runnable
 			while (listening)
 			{
 				Socket socket = serverSocket.accept();
-				consoleMessage("client connection from " + socket.getRemoteSocketAddress());
+				consoleMessage("Policy connection from " + socket.getRemoteSocketAddress());
 				PolicyServerConnection connection = new PolicyServerConnection(socket);
 				new Thread(connection).start();
 			}
@@ -58,6 +58,6 @@ public class PolicyServer implements Runnable
 	
 	public void consoleMessage(String msg)
 	{
-		ImageServerMain.consoleMessage(msg);
+		ImageServerMain.consoleMessage("POLICYSERVER:" + msg);
 	}
 }
