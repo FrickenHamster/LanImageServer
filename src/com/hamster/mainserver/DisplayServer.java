@@ -56,9 +56,17 @@ public class DisplayServer implements Runnable
 		
 	}
 	
-	public void newLink(String link)
+	public void newLink(int id, String link)
 	{
-		
+		for (DisplayConnection displayConnection : displayList)
+		{
+			displayConnection.sendLink(id, link);
+		}
+	}
+
+	public void removeSubmitConnection(DisplayConnection con)
+	{
+		displayList.remove(con);
 	}
 
 	public void consoleMessage(String msg)

@@ -44,14 +44,6 @@ public class DisplayConnection implements Runnable
 					sendPong();
 					break;
 				}
-				case IMAGE_LINK:
-				{
-					String ss = packetStream.readUTF();
-					imageServer.addLink(ss);
-					consoleMessage("recieved: " + ss);
-
-					break;
-				}
 			}
 
 		} catch (IOException e)
@@ -87,6 +79,65 @@ public class DisplayConnection implements Runnable
 		{
 			debug("ERROR");
 			//e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+	}
+
+	public void sendPong()
+	{
+		ByteArrayOutputStream output = new ByteArrayOutputStream();
+		output.write(PING);
+		byte[] ba = output.toByteArray();
+		sendPacket(ba);
+	}
+	
+	public void sendLink(int id, String link)
+	{
+		ByteArrayOutputStream bbo = new ByteArrayOutputStream();
+		DataOutputStream output = new DataOutputStream(bbo);
+		try
+		{
+			output.writeByte(IMAGE_LINK);
+			output.writeByte(id);
+			output.writeUTF(link);
+			byte[] ba = bbo.toByteArray();
+			sendPacket(ba);
+		} catch (IOException e)
+		{
+			e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+		}
+
+	}
+	public void sendPacket(byte[] ba)
+	{
+		try
+		{
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			DataOutputStream dd = new DataOutputStream( bout );
+			dd.writeShort( ba.length );
+			dd.write( ba );
+			byte[] bb = bout.toByteArray();
+
+			outputStream.write(bb);
+			outputStream.flush();
+		}
+		catch( Exception e )
+		{
+			debug( e.getMessage() );
+			closeConnection();
+		}
+	}
+
+	protected void closeConnection()
+	{
+		try {
+			this.outputStream.close();
+			this.inputStream.close();
+			this.socket.close();
+			displayServer.removeSubmitConnection(this);
+			consoleMessage("connection closed");
+		}
+		catch (Exception e) {
+			debug("Exception (closing): " + e.getMessage());
 		}
 	}
 
